@@ -135,8 +135,19 @@ function OptionRowLHN({
     const textUnreadStyle = shouldUseBoldText(optionItem) ? [textStyle, styles.sidebarLinkTextBold] : [textStyle];
     const displayNameStyle = [styles.optionDisplayName, styles.optionDisplayNameCompact, styles.pre, textUnreadStyle, styles.flexShrink0, style];
     const alternateTextStyle = isInFocusMode
-        ? [textUnreadStyle, styles.textLabelSupporting, styles.optionAlternateTextCompact, styles.ml2, style]
-        : [textUnreadStyle, styles.optionAlternateText, styles.textLabelSupporting, style];
+        ? [
+              styles.textLabelSupporting,
+              styles.optionAlternateTextCompact,
+              shouldUseBoldText(optionItem) ? styles.sidebarLinkTextBold : undefined,
+              styles.ml2,
+              style,
+          ]
+        : [
+              styles.textLabelSupporting,
+              styles.optionAlternateText,
+              shouldUseBoldText(optionItem) ? styles.sidebarLinkTextBold : undefined,
+              style,
+          ];
 
     const contentContainerStyles = isInFocusMode ? [styles.flex1, styles.flexRow, styles.overflowHidden, StyleUtils.getCompactContentContainerStyles()] : [styles.flex1];
     const hoveredBackgroundColor = !!styles.sidebarLinkHover && 'backgroundColor' in styles.sidebarLinkHover ? styles.sidebarLinkHover.backgroundColor : theme.sidebar;
