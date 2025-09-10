@@ -64,6 +64,7 @@ import {
     isPayer,
     isReportOutstanding,
     isRootGroupChat,
+    isUnread,
     parseReportRouteParams,
     prepareOnboardingOnyxData,
     requiresAttentionFromCurrentUser,
@@ -5606,6 +5607,20 @@ describe('ReportUtils', () => {
             Onyx.set(ONYXKEYS.PERSONAL_DETAILS_LIST, personalDetails).then(() => {
                 expect(canSeeDefaultRoom(report, betas, false)).toBe(true);
             });
+        });
+    });
+
+    describe('isUnread', () => {
+        it('returns true when lastReadTime equals lastVisibleActionCreated', () => {
+            const timestamp = DateUtils.getDBTime();
+            const report: Report = {
+                reportID: '1',
+                type: CONST.REPORT.TYPE.CHAT,
+                lastVisibleActionCreated: timestamp,
+                lastReadTime: timestamp,
+                lastMessageText: 'hi',
+            } as unknown as Report;
+            expect(isUnread(report, undefined)).toBe(true);
         });
     });
 
