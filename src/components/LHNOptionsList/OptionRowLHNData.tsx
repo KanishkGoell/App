@@ -3,6 +3,7 @@ import React, {useMemo, useRef} from 'react';
 import useCurrentReportID from '@hooks/useCurrentReportID';
 import useGetExpensifyCardFromReportAction from '@hooks/useGetExpensifyCardFromReportAction';
 import useOnyx from '@hooks/useOnyx';
+import {useSession} from '@components/OnyxListItemProvider';
 import {getSortedReportActions, shouldReportActionBeVisibleAsLastAction} from '@libs/ReportActionsUtils';
 import {canUserPerformWriteAction as canUserPerformWriteActionUtil} from '@libs/ReportUtils';
 import SidebarUtils from '@libs/SidebarUtils';
@@ -44,6 +45,7 @@ function OptionRowLHNData({
     const reportID = propsToForward.reportID;
     const currentReportIDValue = useCurrentReportID();
     const isReportFocused = isOptionFocused && currentReportIDValue?.currentReportID === reportID;
+    const session = useSession();
 
     const optionItemRef = useRef<OptionData | undefined>(undefined);
 
@@ -121,6 +123,7 @@ function OptionRowLHNData({
         isReportArchived,
         movedFromReport,
         movedToReport,
+        session?.accountID,
     ]);
 
     return (
