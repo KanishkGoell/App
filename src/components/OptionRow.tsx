@@ -137,6 +137,7 @@ function OptionRow({
         textStyle,
         styles.optionAlternateText,
         styles.textLabelSupporting,
+        boldStyle || option.boldStyle ? styles.sidebarLinkTextBold : undefined,
         style,
         (option.alternateTextMaxLines ?? 1) === 1 ? styles.pre : styles.preWrap,
     ];
