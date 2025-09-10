@@ -28,6 +28,7 @@ import {
     orderWorkspaceOptions,
     recentReportComparator,
     sortAlphabetically,
+    shouldUseBoldText,
 } from '@libs/OptionsListUtils';
 import {canCreateTaskInReport, canUserPerformWriteAction, isCanceledTaskReport, isExpensifyOnlyParticipantInReport} from '@libs/ReportUtils';
 import type {OptionData} from '@libs/ReportUtils';
@@ -2052,6 +2053,21 @@ describe('OptionsListUtils', () => {
             const sortedOptions = sortAlphabetically(options, 'text', localeCompare);
             expect(sortedOptions.length).toBe(1);
             expect(sortedOptions.at(0)?.text).toBe('Single');
+        });
+    });
+
+    describe('shouldUseBoldText', () => {
+        it('returns true for unread report without notification preference', () => {
+            const accountID = 1;
+            Onyx.set(ONYXKEYS.SESSION, {accountID, email: 'test@example.com'});
+
+            const option = {
+                reportID: '1',
+                isUnread: true,
+                participants: {[accountID]: {}},
+            } as unknown as SearchOption<Report>;
+
+            expect(shouldUseBoldText(option)).toBe(true);
         });
     });
     describe('getSearchValueForPhoneOrEmail', () => {

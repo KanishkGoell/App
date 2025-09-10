@@ -1776,11 +1776,13 @@ function getDefaultNotificationPreferenceForReport(report: OnyxEntry<Report>): V
 }
 
 /**
- * Get the notification preference given a report. This should ALWAYS default to 'hidden'. Do not change this!
+ * Get the notification preference given a report. Falls back to the default
+ * notification preference for the report type when none is set for the current
+ * user.
  */
 function getReportNotificationPreference(report: OnyxEntry<Report>): ValueOf<typeof CONST.REPORT.NOTIFICATION_PREFERENCE> {
     const participant = currentUserAccountID ? report?.participants?.[currentUserAccountID] : undefined;
-    return participant?.notificationPreference ?? CONST.REPORT.NOTIFICATION_PREFERENCE.HIDDEN;
+    return participant?.notificationPreference ?? getDefaultNotificationPreferenceForReport(report);
 }
 
 /**
